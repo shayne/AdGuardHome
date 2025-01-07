@@ -110,7 +110,7 @@ func TestDefaultAddrProc_Process_rDNS(t *testing.T) {
 						return tc.host, 0, tc.rdnsErr
 					},
 				},
-				PrivateSubnets: netutil.SubnetSetFunc(netutil.IsLocallyServed),
+				PrivateSubnets: netutil.SubnetSetFunc(netutil.IsSpecialPurpose),
 				AddressUpdater: &aghtest.AddressUpdater{
 					OnUpdateAddress: newOnUpdateAddress(tc.wantUpd, updIPCh, updHostCh, updInfoCh),
 				},
@@ -221,7 +221,7 @@ func TestDefaultAddrProc_Process_WHOIS(t *testing.T) {
 						panic("not implemented")
 					},
 				},
-				PrivateSubnets: netutil.SubnetSetFunc(netutil.IsLocallyServed),
+				PrivateSubnets: netutil.SubnetSetFunc(netutil.IsSpecialPurpose),
 				AddressUpdater: &aghtest.AddressUpdater{
 					OnUpdateAddress: newOnUpdateAddress(tc.wantUpd, updIPCh, updHostCh, updInfoCh),
 				},

@@ -180,12 +180,12 @@ func initDNSServer(
 
 // parseSubnetSet parses a slice of subnets.  If the slice is empty, it returns
 // a subnet set that matches all locally served networks, see
-// [netutil.IsLocallyServed].
+// [netutil.IsSpecialPurpose].
 func parseSubnetSet(nets []netutil.Prefix) (s netutil.SubnetSet) {
 	switch len(nets) {
 	case 0:
 		// Use an optimized function-based matcher.
-		return netutil.SubnetSetFunc(netutil.IsLocallyServed)
+		return netutil.SubnetSetFunc(netutil.IsSpecialPurpose)
 	case 1:
 		return nets[0].Prefix
 	default:

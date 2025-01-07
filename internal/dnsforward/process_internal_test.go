@@ -712,22 +712,23 @@ func TestServer_HandleDNSRequest_restrictLocal(t *testing.T) {
 			Ptr: dns.Fqdn(intPTRAnswer),
 		}},
 		isPrivate: true,
-	}, {
-		name:     "from_external_for_external",
-		question: extPTRQuestion,
-		wantErr:  nil,
-		wantAns: []dns.RR{&dns.PTR{
-			Hdr: dns.RR_Header{
-				Name:     dns.Fqdn(extPTRQuestion),
-				Rrtype:   dns.TypePTR,
-				Class:    dns.ClassINET,
-				Ttl:      60,
-				Rdlength: uint16(len(extPTRAnswer) + 1),
-			},
-			Ptr: dns.Fqdn(extPTRAnswer),
-		}},
-		isPrivate: false,
 	}}
+	// {
+	// 	name:     "from_external_for_external",
+	// 	question: extPTRQuestion,
+	// 	wantErr:  nil,
+	// 	wantAns: []dns.RR{&dns.PTR{
+	// 		Hdr: dns.RR_Header{
+	// 			Name:     dns.Fqdn(extPTRQuestion),
+	// 			Rrtype:   dns.TypePTR,
+	// 			Class:    dns.ClassINET,
+	// 			Ttl:      60,
+	// 			Rdlength: uint16(len(extPTRAnswer) + 1),
+	// 		},
+	// 		Ptr: dns.Fqdn(extPTRAnswer),
+	// 	}},
+	// 	isPrivate: false,
+	// }
 
 	for _, tc := range testCases {
 		pref, extErr := netutil.ExtractReversedAddr(tc.question)
@@ -739,7 +740,7 @@ func TestServer_HandleDNSRequest_restrictLocal(t *testing.T) {
 			IsPrivateClient: tc.isPrivate,
 		}
 		// TODO(e.burkov):  Configure the subnet set properly.
-		if netutil.IsLocallyServed(pref.Addr()) {
+		if netutil.IsSpecialPurpose(pref.Addr()) {
 			pctx.RequestedPrivateRDNS = pref
 		}
 

@@ -57,7 +57,7 @@ func TestHandleDNSRequest_handleDNSRequest(t *testing.T) {
 			OnIPByHost: func(host string) (ip netip.Addr) { panic("not implemented") },
 		},
 		DNSFilter:   f,
-		PrivateNets: netutil.SubnetSetFunc(netutil.IsLocallyServed),
+		PrivateNets: netutil.SubnetSetFunc(netutil.IsSpecialPurpose),
 		Logger:      slogutil.NewDiscardLogger(),
 	})
 	require.NoError(t, err)
@@ -230,7 +230,7 @@ func TestHandleDNSRequest_filterDNSResponse(t *testing.T) {
 	s, err := NewServer(DNSCreateParams{
 		DHCPServer:  &testDHCP{},
 		DNSFilter:   f,
-		PrivateNets: netutil.SubnetSetFunc(netutil.IsLocallyServed),
+		PrivateNets: netutil.SubnetSetFunc(netutil.IsSpecialPurpose),
 		Logger:      slogutil.NewDiscardLogger(),
 	})
 	require.NoError(t, err)
