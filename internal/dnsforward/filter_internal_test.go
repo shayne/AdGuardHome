@@ -43,7 +43,7 @@ func TestServer_filterDNSResponse(t *testing.T) {
 	s, err := NewServer(DNSCreateParams{
 		DHCPServer:  &testDHCP{},
 		DNSFilter:   f,
-		PrivateNets: netutil.SubnetSetFunc(netutil.IsLocallyServed),
+		PrivateNets: netutil.SubnetSetFunc(netutil.IsSpecialPurpose),
 		Logger:      testLogger,
 	})
 	require.NoError(t, err)

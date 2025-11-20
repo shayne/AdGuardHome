@@ -64,7 +64,7 @@ func TestServer_ServeDNS(t *testing.T) {
 			OnIPByHost: func(host string) (_ netip.Addr) { panic(testutil.UnexpectedCall(host)) },
 		},
 		DNSFilter:   f,
-		PrivateNets: netutil.SubnetSetFunc(netutil.IsLocallyServed),
+		PrivateNets: netutil.SubnetSetFunc(netutil.IsSpecialPurpose),
 		Logger:      testLogger,
 	})
 	require.NoError(t, err)
@@ -222,7 +222,7 @@ func TestServer_ServeDNS_restrictLocal(t *testing.T) {
 	intPTRQuestion, err := netutil.IPToReversedAddr(intAddr.AsSlice())
 	require.NoError(t, err)
 
-	extAddr := netip.MustParseAddr("254.253.252.1")
+	extAddr := netip.MustParseAddr("1.2.3.4")
 	extPTRQuestion, err := netutil.IPToReversedAddr(extAddr.AsSlice())
 	require.NoError(t, err)
 
@@ -335,7 +335,7 @@ func TestServer_ServeDNS_restrictLocal(t *testing.T) {
 			IsPrivateClient: tc.isPrivate,
 		}
 		// TODO(e.burkov):  Configure the subnet set properly.
-		if netutil.IsLocallyServed(pref.Addr()) {
+		if netutil.IsSpecialPurpose(pref.Addr()) {
 			pctx.RequestedPrivateRDNS = pref
 		}
 

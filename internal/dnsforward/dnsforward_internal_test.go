@@ -171,7 +171,7 @@ func createTestServer(
 	s, err = NewServer(DNSCreateParams{
 		DHCPServer:  dhcp,
 		DNSFilter:   f,
-		PrivateNets: netutil.SubnetSetFunc(netutil.IsLocallyServed),
+		PrivateNets: netutil.SubnetSetFunc(netutil.IsSpecialPurpose),
 		Logger:      testLogger,
 	})
 	require.NoError(tb, err)
@@ -1119,7 +1119,7 @@ func TestBlockedCustomIP(t *testing.T) {
 	s, err := NewServer(DNSCreateParams{
 		DHCPServer:  dhcp,
 		DNSFilter:   f,
-		PrivateNets: netutil.SubnetSetFunc(netutil.IsLocallyServed),
+		PrivateNets: netutil.SubnetSetFunc(netutil.IsSpecialPurpose),
 		Logger:      testLogger,
 	})
 	require.NoError(t, err)
@@ -1326,7 +1326,7 @@ func TestRewrite(t *testing.T) {
 	s, err := NewServer(DNSCreateParams{
 		DHCPServer:  dhcp,
 		DNSFilter:   f,
-		PrivateNets: netutil.SubnetSetFunc(netutil.IsLocallyServed),
+		PrivateNets: netutil.SubnetSetFunc(netutil.IsSpecialPurpose),
 		Logger:      testLogger,
 	})
 	require.NoError(t, err)
@@ -1461,7 +1461,7 @@ func TestPTRResponseFromDHCPLeases(t *testing.T) {
 				return "myhost"
 			},
 		},
-		PrivateNets: netutil.SubnetSetFunc(netutil.IsLocallyServed),
+		PrivateNets: netutil.SubnetSetFunc(netutil.IsSpecialPurpose),
 		Logger:      testLogger,
 		LocalDomain: localDomain,
 	})
@@ -1552,7 +1552,7 @@ func TestPTRResponseFromHosts(t *testing.T) {
 	s, err = NewServer(DNSCreateParams{
 		DHCPServer:  dhcp,
 		DNSFilter:   flt,
-		PrivateNets: netutil.SubnetSetFunc(netutil.IsLocallyServed),
+		PrivateNets: netutil.SubnetSetFunc(netutil.IsSpecialPurpose),
 		Logger:      testLogger,
 	})
 	require.NoError(t, err)

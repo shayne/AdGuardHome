@@ -118,7 +118,7 @@ func TestDefaultAddrProc_Process_rDNS(t *testing.T) {
 				Exchanger: &aghtest.Exchanger{
 					OnExchange: onExchange,
 				},
-				PrivateSubnets: netutil.SubnetSetFunc(netutil.IsLocallyServed),
+				PrivateSubnets: netutil.SubnetSetFunc(netutil.IsSpecialPurpose),
 				AddressUpdater: &aghtest.AddressUpdater{
 					OnUpdateAddress: newOnUpdateAddress(tc.wantUpd, updIPCh, updHostCh, updInfoCh),
 				},
@@ -234,7 +234,7 @@ func TestDefaultAddrProc_Process_WHOIS(t *testing.T) {
 				Exchanger: &aghtest.Exchanger{
 					OnExchange: onExchange,
 				},
-				PrivateSubnets: netutil.SubnetSetFunc(netutil.IsLocallyServed),
+				PrivateSubnets: netutil.SubnetSetFunc(netutil.IsSpecialPurpose),
 				AddressUpdater: &aghtest.AddressUpdater{
 					OnUpdateAddress: newOnUpdateAddress(tc.wantUpd, updIPCh, updHostCh, updInfoCh),
 				},
